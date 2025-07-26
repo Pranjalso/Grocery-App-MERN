@@ -7,55 +7,25 @@ import User from "../models/User.js";
 
 export const update = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId; // ✅ Now it will have value
     const { cartItems } = req.body;
 
-    if (!cartItems || typeof cartItems !== 'object') {
-      return res.json({ success: false, message: 'Invalid cart items' });
+    if (!cartItems || typeof cartItems !== "object") {
+      return res.status(400).json({ success: false, message: "Invalid cart items" });
     }
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.json({ success: false, message: 'User not found' });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
     user.cartItems = cartItems;
     await user.save();
 
-    return res.json({ success: true, message: 'Cart updated' });
+    return res.status(200).json({ success: true, message: "Cart updated" });
   } catch (error) {
     console.log("Cart update error:", error.message);
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
-
-
-// export const update = async (req, res) => {
-//   try {
-//     const userId = req.userId; // comes from authUser middleware
-//     const { cartItems } = req.body;
-
-//     const user = await User.findById(userId);
-//     if (!user) return res.json({ success: false, message: 'User not found' });
-
-//     user.cartItems = cartItems;
-//     await user.save();
-
-//     return res.json({ success: true, message: 'Cart updated' });
-//   } catch (error) {
-//     return res.json({ success: false, message: error.message });
-//   }
-// };
-
-
-// export const update = async (req , res)=>{
-//     try {
-//         const { userId, cartItems } = req.body
-//         await User.findByIdAndUpdate(userId, {cartItems})
-//         res.json({ success : true, message: "Cart Updated"})
-//     } catch (error) {
-//          console.log(error.message);
-//        res.json({ success: false, message: error.message });
-//     }
-// }
 
