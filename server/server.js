@@ -30,9 +30,7 @@ app.post('/stripe', express.raw({type: 'application/json'}), stripeWenhooks)
 
 //Middleware configuration
 app.use(cors({
-  origin: [
-  "https://grocery-app-mern-frontend.vercel.app" ,
-  ],// for production
+  origin: "https://grocery-app-mern-frontend.vercel.app",
   credentials: true
 }));
 app.use(express.json());
