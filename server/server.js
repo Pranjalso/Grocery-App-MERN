@@ -20,13 +20,19 @@ await connectCloudinary()
 
 
 //Allow multiple origins
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://grocery-app-mern-frontend.vercel.app"
+];
+
 
 app.post('/stripe', express.raw({type: 'application/json'}), stripeWenhooks)
 
 //Middleware configuration
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173',
+  "https://grocery-app-mern-frontend.vercel.app" ,
+  ],// for production
   credentials: true
 }));
 app.use(express.json());
