@@ -91,3 +91,16 @@ export const logout = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+// ✅ New Function
+export const isAuth = async (req, res) => {
+  try {
+    if (!req.userId) {
+      return res.status(401).json({ success: false, message: "Not Authorized" });
+    }
+    return res.status(200).json({ success: true, message: "User is authenticated" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
